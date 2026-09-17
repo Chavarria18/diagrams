@@ -5451,8 +5451,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <h3>Area (areas) &amp; pivot gerente_areas (no model)</h3>
         </div>
         <ul>
-          <li>&bull; Area: id PK, name — usuarios() 1:N · gerentes() N:M</li>
-          <li>&bull; gerente_areas: id PK, gerente_id/area_id FK (cascade), unique pair — resolves User⇄Area N:M</li>
+          <li>&bull; Area: id:bigint PK, name:string — usuarios() 1:N · gerentes() N:M</li>
+          <li>&bull; gerente_areas: id:bigint PK, gerente_id/area_id:bigint FK! (cascade) — unique pair, resolves User⇄Area N:M</li>
+          <li>&bull; Notation: ? nullable · ! unique · FK foreign key · all tables also carry created_at/updated_at:timestamp</li>
         </ul>
       </div>
 
@@ -5462,7 +5463,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <h3>User — users</h3>
         </div>
         <ul>
-          <li>&bull; id PK, name, email(unique), cognito_sub(unique), role:enum, area_id FK(null)</li>
+          <li>&bull; id:bigint PK, name:string, email:string!, cognito_sub:string!, role:enum=estandar</li>
+          <li>&bull; area_id:bigint FK?, email_verified_at:timestamp?, remember_token:string(hidden)</li>
           <li>&bull; area() N:1 · files()/historic() 1:N · areasGestionadas() N:M</li>
         </ul>
       </div>
@@ -5473,8 +5475,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <h3>File (files) &amp; History (historials)</h3>
         </div>
         <ul>
-          <li>&bull; File: id PK, uuid, s3dir, size, user_id FK, deleted_at(null) — user() N:1</li>
-          <li>&bull; History: id PK, action, user_id FK(null), username — user() N:1, optional</li>
+          <li>&bull; File: id:bigint PK, uuid:uuid!, name:string, s3dir:string, size:bigint, user_id FK, observation:text?, deleted_at:timestamp? — user() N:1</li>
+          <li>&bull; History: id:bigint PK, action:string, user_id:bigint FK?, username:string — user() N:1, optional</li>
         </ul>
       </div>
     </div>
